@@ -3,77 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gourmet Food Solutions</title>
+    <title>Gourmet Food Solutions - Menu</title>
     <style>
         body {
-            background-color: #98FB98; 
+            background-color: #98FB98;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 40px;
+            padding: 20px;
             color: #1a331a;
+            padding-bottom: 100px;
+        }
+
+        .header-section {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            margin-bottom: 30px;
         }
 
         h1 {
             color: #006400;
-            border-bottom: 2px solid #006400;
-            padding-bottom: 10px;
+            margin-bottom: 5px;
         }
 
-        h2 {
-            color: #2e8b57;
-            margin-top: 30px;
-            background: rgba(255, 255, 255, 0.3);
-            padding: 5px 10px;
-            border-radius: 5px;
+        /* تنسيق شبكة المنتجات */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
-        h3 {
+        /* تنسيق كارت الصنف */
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            text-align: center;
+            padding-bottom: 15px;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .product-card h3 {
+            margin: 15px 0 5px 0;
             color: #228b22;
         }
 
-        ul {
-            line-height: 1.8;
+        .product-card p {
+            font-size: 0.9em;
+            color: #666;
+            padding: 0 10px;
         }
 
-        img {
-            display: block;
-            margin-bottom: 20px;
-            background: white;
-            padding: 10px;
-            border-radius: 10px;
+        /* زر الواتساب */
+        .whatsapp-link {
+            display: inline-block;
+            background-color: #25D366;
+            color: white;
+            padding: 10px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 2px 5px 15px rgba(0,0,0,0.2);
+            font-weight: bold;
+            z-index: 1000;
         }
     </style>
 </head>
 <body>
 
-<img src="logo.png" width="180" alt="Gourmet Logo">
+<div class="header-section">
+    <img src="logo.png" width="150" alt="Gourmet Logo" style="background: none; margin: 0 auto;">
+    <h1>Gourmet Food Solutions</h1>
+    <p>Premium Charcuterie & Food Services</p>
+    <a href="https://wa.me/201144455889" class="whatsapp-link">Order via WhatsApp</a>
+</div>
 
-<h1>Gourmet Food Solutions</h1>
-<p><strong>Premium Food Services & Catering</strong></p>
+<h2 style="text-align: center; color: #006400;">Our Premium Selection</h2>
 
-<h2>Our Menu</h2>
+<div class="menu-grid">
+    <div class="product-card">
+        <img src="Basterma.png" alt="Basterma">
+        <h3>Basterma</h3>
+        <p>Traditional cured beef with premium spices.</p>
+    </div>
 
-<h3>Hot Meals</h3>
-<ul>
-    <li>Grilled Chicken</li>
-    <li>Beef Dishes</li>
-    <li>Rice & Sauces</li>
-</ul>
+    <div class="product-card">
+        <img src="Grison.png" alt="Grison">
+        <h3>Grison</h3>
+        <p>Premium air-dried beef, thinly sliced.</p>
+    </div>
 
-<h3>Cold Items</h3>
-<ul>
-    <li>Fresh Salads</li>
-    <li>Sandwich Platters</li>
-</ul>
+    <div class="product-card">
+        <img src="Pepperoni.png" alt="Pepperoni">
+        <h3>Pepperoni</h3>
+        <p>Classic spicy pepperoni for pizzas and platters.</p>
+    </div>
 
-<h3>Bakery</h3>
-<ul>
-    <li>Bread Selection</li>
-    <li>Desserts</li>
-</ul>
+    <div class="product-card">
+        <img src="Beef Sausage with Paprika.png" alt="Beef Sausage">
+        <h3>Beef Sausage</h3>
+        <p>The Real Deal - Beef sausage with a touch of Paprika.</p>
+    </div>
+</div>
 
-<h2>Portfolio</h2>
-<p>Corporate catering & large-scale food solutions</p>
+<div style="text-align: center; margin-top: 50px;">
+    <h2>Portfolio</h2>
+    <p>Corporate catering & large-scale food solutions</p>
+</div>
+
+<a href="https://wa.me/201144455889" class="floating-whatsapp">
+   💬 Order Now
+</a>
 
 </body>
 </html>
