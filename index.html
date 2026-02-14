@@ -1,9 +1,9 @@
  (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
 diff --git a/index.html b/index.html
-index 3c38791a0ee1b639ecad3462d422e19429e7e140..25b305e1afbd970c588fb55fbd400e8bcbf9c220 100644
+index 3c38791a0ee1b639ecad3462d422e19429e7e140..d1e7bcb92290c57565400baea6928c7d43bf9add 100644
 --- a/index.html
 +++ b/index.html
-@@ -1,196 +1,566 @@
+@@ -1,196 +1,720 @@
  <!DOCTYPE html>
  <html lang="en">
  <head>
@@ -390,6 +390,49 @@ index 3c38791a0ee1b639ecad3462d422e19429e7e140..25b305e1afbd970c588fb55fbd400e8b
 +      box-shadow: 0 8px 18px rgba(0,0,0,0.3);
 +    }
 +
++
++    .data-actions {
++      display: flex;
++      flex-wrap: wrap;
++      gap: 10px;
++      margin-bottom: 10px;
++    }
++
++    .btn-danger { background: #b33a3a; color: #fff; }
++
++    .member-table-wrap {
++      overflow-x: auto;
++      border: 1px solid var(--line);
++      border-radius: 10px;
++    }
++
++    table.member-table {
++      width: 100%;
++      border-collapse: collapse;
++      font-size: 0.9rem;
++      background: #fff;
++    }
++
++    .member-table th,
++    .member-table td {
++      border-bottom: 1px solid #ecf1ec;
++      padding: 8px;
++      text-align: left;
++      vertical-align: top;
++      white-space: nowrap;
++    }
++
++    .member-table th {
++      background: #f4f8f4;
++      color: #294030;
++    }
++
++    .empty-state {
++      color: var(--muted);
++      font-style: italic;
++      margin: 0;
++    }
++
 +    @media (max-width: 980px) {
 +      .hero { grid-template-columns: 1fr; }
 +      .catalog-layout { grid-template-columns: 1fr; }
@@ -508,6 +551,45 @@ index 3c38791a0ee1b639ecad3462d422e19429e7e140..25b305e1afbd970c588fb55fbd400e8b
 +      </div>
 +    </section>
 +
++
++    <section>
++      <div class="section-head">
++        <h2>Registered member data</h2>
++        <p>View, export, or clear registered business member data collected from login.</p>
++      </div>
++      <div class="panel">
++        <div class="data-actions">
++          <button class="btn btn-light" id="refreshMembers">Refresh data</button>
++          <button class="btn btn-brand" id="downloadMembersJson">Download JSON</button>
++          <button class="btn btn-light" id="downloadMembersCsv">Download CSV</button>
++          <button class="btn btn-danger" id="clearMembers">Clear all member data</button>
+         </div>
+-        <div class="feature-box">
+-            <span style="font-size:40px">📦</span>
+-            <h3>Bulk Supply</h3>
+-            <p>Consistent quality and reliable supply chains for your business.</p>
++        <p class="hint">Data is stored in this browser only (`localStorage`). For central reporting, connect this form to a backend API.</p>
++        <div class="member-table-wrap">
++          <table class="member-table" id="membersTable">
++            <thead>
++              <tr>
++                <th>#</th>
++                <th>Name</th>
++                <th>Email</th>
++                <th>Company</th>
++                <th>Segment</th>
++                <th>Phone</th>
++                <th>Consent</th>
++                <th>Captured At</th>
++              </tr>
++            </thead>
++            <tbody id="membersTableBody"></tbody>
++          </table>
+         </div>
+-    </div>
++      </div>
++    </section>
++
 +    <section class="contact">
 +      <h2>Partner with Gourmet</h2>
 +      <p>For contracts, product lists, and price requests:</p>
@@ -515,7 +597,12 @@ index 3c38791a0ee1b639ecad3462d422e19429e7e140..25b305e1afbd970c588fb55fbd400e8b
 +      <a href="https://wa.me/201144455889" class="whatsapp-btn">WhatsApp Business Inquiry</a>
 +    </section>
 +  </div>
-+
+ 
+-    <h2 class="section-title">Professional Selection</h2>
+-    <div class="menu-grid">
+-        <div class="product-card">
+-            <img src="Basterma.png" alt="Basterma">
+-            <div class="product-info"><h3>Basterma</h3></div>
 +  <div class="modal-overlay" id="loginModal" aria-hidden="true">
 +    <div class="modal">
 +      <h3 style="margin-top:0">Business Visitor Login</h3>
@@ -525,28 +612,23 @@ index 3c38791a0ee1b639ecad3462d422e19429e7e140..25b305e1afbd970c588fb55fbd400e8b
 +          <label for="name">Full name</label>
 +          <input id="name" name="name" required />
          </div>
--        <div class="feature-box">
--            <span style="font-size:40px">📦</span>
--            <h3>Bulk Supply</h3>
--            <p>Consistent quality and reliable supply chains for your business.</p>
+-        <div class="product-card">
+-            <img src="Grison.png" alt="Grison">
+-            <div class="product-info"><h3>Grison</h3></div>
 +        <div>
 +          <label for="email">Business email</label>
 +          <input id="email" name="email" type="email" required />
          </div>
--    </div>
--
--    <h2 class="section-title">Professional Selection</h2>
--    <div class="menu-grid">
 -        <div class="product-card">
--            <img src="Basterma.png" alt="Basterma">
--            <div class="product-info"><h3>Basterma</h3></div>
+-            <img src="Pepperoni.png" alt="Pepperoni">
+-            <div class="product-info"><h3>Pepperoni</h3></div>
 +        <div>
 +          <label for="company">Company</label>
 +          <input id="company" name="company" required />
          </div>
 -        <div class="product-card">
--            <img src="Grison.png" alt="Grison">
--            <div class="product-info"><h3>Grison</h3></div>
+-            <img src="Beef Sausage with Paprika.png" alt="Beef Sausage">
+-            <div class="product-info"><h3>Beef Sausage</h3></div>
 +        <div>
 +          <label for="segment">Business type</label>
 +          <select id="segment" name="segment" required>
@@ -557,17 +639,11 @@ index 3c38791a0ee1b639ecad3462d422e19429e7e140..25b305e1afbd970c588fb55fbd400e8b
 +            <option>Retailer</option>
 +            <option>Distributor</option>
 +          </select>
-         </div>
--        <div class="product-card">
--            <img src="Pepperoni.png" alt="Pepperoni">
--            <div class="product-info"><h3>Pepperoni</h3></div>
++        </div>
 +        <div>
 +          <label for="phone">Phone number</label>
 +          <input id="phone" name="phone" required />
-         </div>
--        <div class="product-card">
--            <img src="Beef Sausage with Paprika.png" alt="Beef Sausage">
--            <div class="product-info"><h3>Beef Sausage</h3></div>
++        </div>
 +        <div>
 +          <label for="consent">Consent</label>
 +          <select id="consent" name="consent" required>
@@ -668,6 +744,56 @@ index 3c38791a0ee1b639ecad3462d422e19429e7e140..25b305e1afbd970c588fb55fbd400e8b
 +      });
 +    }
 +
++    function getMemberLog() {
++      return JSON.parse(localStorage.getItem('gfsVisitorLog') || '[]');
++    }
++
++    function renderMembersTable() {
++      const body = document.getElementById('membersTableBody');
++      const records = getMemberLog();
++      body.innerHTML = '';
++
++      if (!records.length) {
++        body.innerHTML = '<tr><td colspan="8"><p class="empty-state">No registered members yet.</p></td></tr>';
++        return;
++      }
++
++      records.forEach((member, index) => {
++        const row = document.createElement('tr');
++        row.innerHTML = `
++          <td>${index + 1}</td>
++          <td>${escapeXml(member.name || '')}</td>
++          <td>${escapeXml(member.email || '')}</td>
++          <td>${escapeXml(member.company || '')}</td>
++          <td>${escapeXml(member.segment || '')}</td>
++          <td>${escapeXml(member.phone || '')}</td>
++          <td>${escapeXml(member.consent || '')}</td>
++          <td>${escapeXml(member.capturedAt || '')}</td>
++        `;
++        body.appendChild(row);
++      });
++    }
++
++    function downloadFile(content, fileName, mimeType) {
++      const blob = new Blob([content], { type: mimeType });
++      const url = URL.createObjectURL(blob);
++      const link = document.createElement('a');
++      link.href = url;
++      link.download = fileName;
++      link.click();
++      URL.revokeObjectURL(url);
++    }
++
++    function toCsv(records) {
++      const headers = ['name', 'email', 'company', 'segment', 'phone', 'consent', 'capturedAt', 'source'];
++      const escapeCsv = (value) => `"${String(value ?? '').replaceAll('"', '""')}"`;
++      const lines = [headers.join(',')];
++      records.forEach((record) => {
++        lines.push(headers.map((header) => escapeCsv(record[header])).join(','));
++      });
++      return lines.join('\n');
++    }
++
 +    document.getElementById('addProductForm').addEventListener('submit', (event) => {
 +      event.preventDefault();
 +      const values = Object.fromEntries(new FormData(event.currentTarget).entries());
@@ -727,20 +853,47 @@ index 3c38791a0ee1b639ecad3462d422e19429e7e140..25b305e1afbd970c588fb55fbd400e8b
 +      };
 +
 +      localStorage.setItem('gfsVisitorProfile', JSON.stringify(record));
- 
--</div>
++
 +      const log = JSON.parse(localStorage.getItem('gfsVisitorLog') || '[]');
 +      log.push(record);
 +      localStorage.setItem('gfsVisitorLog', JSON.stringify(log));
- 
--<a href="https://wa.me/201144455889" class="floating-wa">💬</a>
++
 +      updateVisitorBanner();
 +      closeModal();
 +      event.currentTarget.reset();
++      renderMembersTable();
++    });
++
++    document.getElementById('refreshMembers').addEventListener('click', renderMembersTable);
++
++    document.getElementById('downloadMembersJson').addEventListener('click', () => {
++      const data = getMemberLog();
++      const date = new Date().toISOString().slice(0, 10);
++      downloadFile(JSON.stringify(data, null, 2), `gfs-members-${date}.json`, 'application/json');
++    });
+ 
+-</div>
++    document.getElementById('downloadMembersCsv').addEventListener('click', () => {
++      const data = getMemberLog();
++      const date = new Date().toISOString().slice(0, 10);
++      downloadFile(toCsv(data), `gfs-members-${date}.csv`, 'text/csv');
++    });
+ 
+-<a href="https://wa.me/201144455889" class="floating-wa">💬</a>
++    document.getElementById('clearMembers').addEventListener('click', () => {
++      const ok = confirm('Delete all registered member data from this browser?');
++      if (!ok) return;
++      localStorage.removeItem('gfsVisitorProfile');
++      localStorage.removeItem('gfsVisitorLog');
++      localStorage.removeItem('gfsVisitCount');
++      localStorage.removeItem('gfsLastVisitAt');
++      updateVisitorBanner();
++      renderMembersTable();
 +    });
  
 +    renderProducts();
 +    updateVisitorBanner();
++    renderMembersTable();
 +  </script>
  </body>
  </html>
